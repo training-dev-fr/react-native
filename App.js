@@ -1,6 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
-import { View, Text, Image, ScrollView, TextInput } from 'react-native';
 import Home from './Components/Home';
 import Profile from './Components/Profile';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,7 +11,7 @@ export default function App({navigation}) {
   const [user, setUser] = useState(null);
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Login">
           {(props) => <Login setUser={setUser} navigation={props.navigation} />}
         </Stack.Screen>
