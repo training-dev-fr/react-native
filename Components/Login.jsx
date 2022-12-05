@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Text, View, TextInput, Pressable, StyleSheet } from 'react-native';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../Service/firebase';
 
-export default function Login({ setUser }) {
+export default function Login({ setUser, navigation }) {
     const [login, setLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
 
     function switchForm() {
         setLogin(!login);
@@ -16,8 +15,16 @@ export default function Login({ setUser }) {
     function signup() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((credential) => {
-                setUser(credential.user);
+                setLogin(true);
             })
+    }
+
+    function signin(){
+        signInWithEmailAndPassword(auth, email, password)
+        .then((credential) => {
+            setUser(credential.user);
+            navigation.navigate("Home");
+        })
     }
 
 
@@ -36,7 +43,7 @@ export default function Login({ setUser }) {
                 <View style={styles.formGroupHorizontal}>
                     <Text style={styles.link} onPress={() => switchForm()}>S'inscrire</Text>
                     <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Connexion</Text>
+                        <Text style={styles.buttonText} onPress={() => signin()}>Connexion</Text>
                     </Pressable>
                 </View>
             }
